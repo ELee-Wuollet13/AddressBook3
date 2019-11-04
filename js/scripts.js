@@ -57,12 +57,14 @@ var addressBook = new AddressBook();
 
 function displayContactDetails(addressBookToDisplay) {
   var contactsList = $("ul#contacts");
+  var button = $("AddAddress")
   var htmlForContactInfo = "";
   addressBookToDisplay.contacts.forEach(function(contact) {
     htmlForContactInfo += "<li id=" + contact.id + ">" + contact.firstName + " " + contact.lastName + "</li>";
   });
   contactsList.html(htmlForContactInfo);
 };
+
 function attachContactListeners() {
   $("ul#contacts").on("click", "li", function() {
     showContact(this.id);
@@ -73,6 +75,18 @@ function attachContactListeners() {
     displayContactDetails(addressBook);
   });
 };
+
+function attachFormgroupListeners() {
+  $("#addAddbtn").click(function() {
+    var formDisplay = $("#newContact");
+    var addAnotherAddress = "";
+
+    addAnotherAddress += '<div class="new-Form another-address"><label for="newAdditionalPhysicalAddress"> Additional Address </label><input type="text"  class="form-control" id="new-Additional-physical-address"><input type="radio" name="address-type" value="work"> Work<br><input type="radio" name="address-type" value="home"> Home<br><input type="radio" name="address-type" value="other"> Other</div>';
+    $("#new").append(addAnotherAddress)
+  });
+};
+
+
 function showContact(contactId) {
   var contact = addressBook.findContact(contactId);
   $("#show-contact").show();
@@ -81,14 +95,16 @@ function showContact(contactId) {
   $(".phone-number").html(contact.phoneNumber);
   $(".email").html(contact.email);
   $(".address").html(contact.address);
-    $(".APaddress").html(contact.aPAddress);
+  $(".APaddress").html(contact.aPAddress);
   var buttons = $("#buttons");
   buttons.empty();
   buttons.append("<button class='deleteButton' id=" +  + contact.id + ">Delete</button>");
 }
 
+
 $(document).ready(function() {
   attachContactListeners();
+  attachFormgroupListeners();
   $("form#new-contact").submit(function(event) {
     event.preventDefault();
     var inputtedFirstName = $("input#new-first-name").val();
@@ -97,7 +113,9 @@ $(document).ready(function() {
     var inputtedEmail = $("input#new-email").val();
     var inputtedAddress = $("input#new-address").val();
     var inputtedAPAddress = $("input#new-Additional-physical-address").val();
-    console.log(inputtedAPAddress);
+    var typeOfAddress = $("input:radio[name=address-type]:checked").val();
+    console.log(typeOfAddress);
+    // var valueFunc = $
     $("input#new-first-name").val("");
     $("input#new-last-name").val("");
     $("input#new-phone-number").val("");
@@ -105,6 +123,7 @@ $(document).ready(function() {
     $("input#new-address").val("");
     $("input#new-Additional-physical-address").val("");
     var newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber, inputtedEmail, inputtedAddress, inputtedAPAddress);
+    $("#type-of-add").text(typeOfAddress)
     addressBook.addContact(newContact);
     displayContactDetails(addressBook);
     console.log(addressBook.contacts);

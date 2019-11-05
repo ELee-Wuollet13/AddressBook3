@@ -78,11 +78,19 @@ function attachContactListeners() {
 
 function attachFormgroupListeners() {
   $("#addAddbtn").click(function() {
-    var formDisplay = $("#newContact");
-    var addAnotherAddress = "";
 
-    addAnotherAddress += '<div class="new-Form another-address"><label for="newAdditionalPhysicalAddress"> Additional Address </label><input type="text"  class="form-control" id="new-Additional-physical-address"><input type="radio" name="address-type" value="work"> Work<br><input type="radio" name="address-type" value="home"> Home<br><input type="radio" name="address-type" value="other"> Other</div>';
+    var formDisplay = $("#newContact");
+    var addReturn = $("#newContact");
+    var addAnotherAddress = "";
+    var addSpan = "";
+    //this loop and the [i] sections within the block below \/ created an error where addAddresses did not populate
+    y = 0; y += 1
+    for (var i=0; i< y; i++)
+    console.log("test");
+    addAnotherAddress += '<div class="new-Form another-address + [i]"><label for="newAdditionalPhysicalAddress+ [i]"> Additional Address </label><input type="text"  class="form-control" id="new-Additional-physical-address + [i]"><input type="radio" class="address-type[i]" value="work"> Work<br><input type="radio" class="address-type[i]" value="home"> Home<br><input type="radio"  class="address-type[i]" value="other"> Other</div>';
+    addSpan += '<span id="type-of-add"></span> address: <span class="APaddress"></span>'
     $("#new").append(addAnotherAddress)
+    $("#show-contact").append(addSpan)
   });
 };
 

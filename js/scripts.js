@@ -77,6 +77,7 @@ function attachContactListeners() {
 };
 
 function attachFormgroupListeners() {
+  y=0;
   $("#addAddbtn").click(function() {
 
     var formDisplay = $("#newContact");
@@ -84,11 +85,11 @@ function attachFormgroupListeners() {
     var addAnotherAddress = "";
     var addSpan = "";
     //this loop and the [i] sections within the block below \/ created an error where addAddresses did not populate
-    y = 0; y += 1
-    for (var i=0; i< y; i++)
+
     console.log("test");
-    addAnotherAddress += '<div class="new-Form another-address + [i]"><label for="newAdditionalPhysicalAddress+ [i]"> Additional Address </label><input type="text"  class="form-control" id="new-Additional-physical-address + [i]"><input type="radio" class="address-type[i]" value="work"> Work<br><input type="radio" class="address-type[i]" value="home"> Home<br><input type="radio"  class="address-type[i]" value="other"> Other</div>';
+    addAnotherAddress += '<div class="new-Form another-address + [' + y +']" ><label for="newAdditionalPhysicalAddress + [' + y +']"> Additional Address </label><input type="text"  class="form-control" id="new-Additional-physical-address + [' + y +']" name="type'+y+'"><input type="radio" class="address-type[' + y +']" value="work" name="type'+y+'"> Work<br><input type="radio" class="address-type[' + y +']" value="home" name="type'+y+'"> Home<br><input type="radio"  class="address-type[' + y +']" value="other" name="type'+y+'"> Other</div>'
     addSpan += '<span id="type-of-add"></span> address: <span class="APaddress"></span>'
+    y++;
     $("#new").append(addAnotherAddress)
     $("#show-contact").append(addSpan)
   });
@@ -103,6 +104,9 @@ function showContact(contactId) {
   $(".phone-number").html(contact.phoneNumber);
   $(".email").html(contact.email);
   $(".address").html(contact.address);
+  for (var i=0; i>contact.aPAddress.length; i++) {
+      $(".APaddress").append(contact.aPAddress[i] + ", ");
+  }
   $(".APaddress").html(contact.aPAddress);
   var buttons = $("#buttons");
   buttons.empty();
@@ -120,7 +124,11 @@ $(document).ready(function() {
     var inputtedPhoneNumber = $("input#new-phone-number").val();
     var inputtedEmail = $("input#new-email").val();
     var inputtedAddress = $("input#new-address").val();
-    var inputtedAPAddress = $("input#new-Additional-physical-address").val();
+    var inputtedAPAddress = [];
+    for (var i=0; i<y; i++) {
+      inputtedAPAddress.push($("input#new-Additional-physical-address + ["+i+"]").val());
+    }
+    // var inputtedAPAddress = $("input#new-Additional-physical-address").val();
     var typeOfAddress = $("input:radio[name=address-type]:checked").val();
     console.log(typeOfAddress);
     // var valueFunc = $
